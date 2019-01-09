@@ -1,0 +1,11 @@
+#define LOAD_BMP
+#define LOAD_GIF
+//#define LOAD_JPG
+#define LOAD_LBM
+#define LOAD_PCX
+//#define LOAD_PNG
+#define LOAD_PNM
+#define LOAD_TGA
+//#define LOAD_TIF
+#define LOAD_XCF
+#define LOAD_XPM

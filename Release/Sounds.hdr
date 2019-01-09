@@ -1,0 +1,46 @@
+computer_subgame.wav
+0 119604
+computer_subgame_defeat.wav
+119604 39382
+computer_subgame_victory.wav
+158986 36710
+crax_subgame.wav
+195696 1714
+crax_subgame_defeat.wav
+197410 13320
+crax_subgame_victory.wav
+210730 19318
+enterdoor.wav
+230048 230
+enterdoor2.wav
+230278 2064
+getobject.wav
+232342 930
+grenadeexplosion.wav
+233272 38298
+gunshot.wav
+271570 6782
+helicopter.wav
+278352 279388
+lift.wav
+557740 96800
+liftbutton.wav
+654540 1302
+menuclick.wav
+655842 5662
+mineexplosion.wav
+661504 32466
+outoftime.wav
+693970 23336
+security_subgame.wav
+717306 36204
+security_subgame_defeat.wav
+753510 106536
+security_subgame_victory.wav
+860046 78112
+subgame_action.wav
+938158 1192
+timertick.wav
+939350 2030
+zeroenergy.wav
+941380 23336
