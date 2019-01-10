@@ -32,9 +32,9 @@ TMessagePanel& MessagePanel()
 TMessagePanel::TMessagePanel()
 {
     InitializeCriticalSection(&MessageCS);
-    panel = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_ANYFORMAT, SDL_GetVideoSurface()->w, ScreenPrinter().CharH() * 3,
-                    SDL_GetVideoSurface()->format->BitsPerPixel, SDL_GetVideoSurface()->format->Rmask,
-                    SDL_GetVideoSurface()->format->Gmask, SDL_GetVideoSurface()->format->Bmask, SDL_GetVideoSurface()->format->Amask);
+    panel = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_ANYFORMAT, Config::BackBuffer->w, ScreenPrinter().CharH() * 3,
+                    Config::BackBuffer->format->BitsPerPixel, Config::BackBuffer->format->Rmask,
+                    Config::BackBuffer->format->Gmask, Config::BackBuffer->format->Bmask, Config::BackBuffer->format->Amask);
 
     SDL_SetColorKey(panel, SDL_SRCCOLORKEY, SDL_MapRGB(panel->format, Config::ColorKey[0], Config::ColorKey[1], Config::ColorKey[2]));
     SDL_FillRect(panel, NULL, SDL_MapRGB(panel->format, Config::ColorKey[0], Config::ColorKey[1], Config::ColorKey[2]));
@@ -61,7 +61,7 @@ void TMessagePanel::Show()
     dest.h = ScreenPrinter().CharH(); dest.w = panel->w;
 
     Background().Show(&dest);
-    My_SDL_BlitSurface(panel, &src, SDL_GetVideoSurface(), &dest);
+    My_SDL_BlitSurface(panel, &src, Config::BackBuffer, &dest);
 
     LeaveCriticalSection(&MessageCS);
 }

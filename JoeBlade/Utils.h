@@ -33,6 +33,7 @@ void LoadHiTable();
 void SaveHiTable();
 void ShowHiTable();
 int My_SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect);
+int My_SDL_Flip();
 int GetScrollDx();
 int GetGlobalX(Sprite *p);
 int GetGlobalY(Sprite *p);

@@ -21,7 +21,7 @@ void TSubgameIndicator::Print(const vector<int>& numbers, const vector<bool>& hi
     SDL_Rect r;
     r.x = Config::Xoffset + Config::GridSize; r.y = Config::Yoffset;
     r.w = Config::RoomWidth - Config::GridSize; r.h = Config::RoomHeight;
-    SDL_FillRect(SDL_GetVideoSurface(), &r, 0);
+    SDL_FillRect(Config::BackBuffer, &r, 0);
 
     int x[] = { IndicatorX, IndicatorX + CharW(), IndicatorX + 2 * CharW(), IndicatorX + 3 * CharW(),
                 IndicatorX + 3 * CharW(), IndicatorX + 2 * CharW(), IndicatorX + CharW(), IndicatorX };
@@ -40,7 +40,7 @@ void TSubgameIndicator::Print(const vector<int>& numbers, const vector<bool>& hi
         src.h = CharH();
         dest.x = x[i]; dest.y = y[i];
 
-        My_SDL_BlitSurface(p, &src, SDL_GetVideoSurface(), &dest);
+        My_SDL_BlitSurface(p, &src, Config::BackBuffer, &dest);
     }
 }
 //---------------------------------------------------------------------------

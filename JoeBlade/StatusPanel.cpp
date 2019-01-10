@@ -43,9 +43,9 @@ TMyStatusPanel::TMyStatusPanel()
 void TMyStatusPanel::PrintNumber(int number, int x, int y, int width)
 {
     char str[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    char format[] = { '%', '0', char(width + '0'), 'd'} ;
-
+    char format[] = { '%', '0', char(width + '0'), 'd', '\0' };
     sprintf(str, format, number);
+
     ScreenPrinter().Print(Config::StatusPanelX + x, Config::StatusPanelY + y, str);
 }
 //---------------------------------------------------------------------------
@@ -65,12 +65,12 @@ void TMyStatusPanel::Show()
     src.h = bullets->h; src.w = Config::BulletW * Joe->Ammo;
     dest.x = Config::StatusPanelX; dest.y = 52 + Config::StatusPanelY;
 
-    My_SDL_BlitSurface(bullets, &src, SDL_GetVideoSurface(), &dest);
+    My_SDL_BlitSurface(bullets, &src, Config::BackBuffer, &dest);
 
     src.x = src.y = 0;
     src.h = hearts->h; src.w = Joe->Energy * Config::HeartW / Config::EnergyFactor;
     dest.x = Config::StatusPanelX; dest.y = 32 + Config::StatusPanelY;
 
-    My_SDL_BlitSurface(hearts, &src, SDL_GetVideoSurface(), &dest);
+    My_SDL_BlitSurface(hearts, &src, Config::BackBuffer, &dest);
 }
 //---------------------------------------------------------------------------

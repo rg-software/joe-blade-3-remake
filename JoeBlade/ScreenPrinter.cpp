@@ -4,6 +4,7 @@
 #include "ScreenPrinter.h"
 #include <string.h>
 #include "Utils.h"
+#include "Config.h"
 
 #pragma package(smart_init)
 
@@ -26,7 +27,7 @@ TScreenPrinter::~TScreenPrinter()
 //---------------------------------------------------------------------------
 void TScreenPrinter::Print(int x, int y, char *message)
 {
-    Print(x, y, message, SDL_GetVideoSurface());
+    Print(x, y, message, Config::BackBuffer);
 }
 //---------------------------------------------------------------------------
 void TScreenPrinter::Print(int x, int y, char *message, SDL_Surface *surface)
@@ -93,7 +94,7 @@ void TScreenPrinter::Print(int x, int y, char *message, SDL_Surface *surface)
 //---------------------------------------------------------------------------
 void TScreenPrinter::PrintCAligned(int y, char *message)
 {
-    PrintCAligned(y, message, SDL_GetVideoSurface());
+    PrintCAligned(y, message, Config::BackBuffer);
 }
 //---------------------------------------------------------------------------
 void TScreenPrinter::PrintCAligned(int y, char *message, SDL_Surface *surface)

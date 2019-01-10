@@ -90,7 +90,7 @@ void Sprite::Show()                                // отобразить на экране
     }
 
     if(doBlit)
-        My_SDL_BlitSurface(frames[CurrentFrame], NULL, SDL_GetVideoSurface(), &rect);
+        My_SDL_BlitSurface(frames[CurrentFrame], NULL, Config::BackBuffer, &rect);
 }
 //---------------------------------------------------------------------------
 void Sprite::SetRoom(int z, int x, int y)

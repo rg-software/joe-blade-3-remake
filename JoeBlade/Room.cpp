@@ -44,8 +44,8 @@ void Room::MakeRoomSurface()                    // сгенерировать комнату и запис
 {
     if(cache == NULL)       // создаём кэш-поверхность размером с комнату
         cache = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_ANYFORMAT, Config::RoomWidth, Config::RoomHeight,
-                    SDL_GetVideoSurface()->format->BitsPerPixel, SDL_GetVideoSurface()->format->Rmask,
-                    SDL_GetVideoSurface()->format->Gmask, SDL_GetVideoSurface()->format->Bmask, SDL_GetVideoSurface()->format->Amask);
+                    Config::BackBuffer->format->BitsPerPixel, Config::BackBuffer->format->Rmask,
+                    Config::BackBuffer->format->Gmask, Config::BackBuffer->format->Bmask, Config::BackBuffer->format->Amask);
 
     SDL_Rect rect;
     rect.x = rect.y = 0;
@@ -88,7 +88,7 @@ void Room::Show(SDL_Rect* src, int xOffset, int yOffset)
     dest.x = Config::Xoffset + xOffset;
     dest.y = Config::Yoffset + yOffset;
 
-    My_SDL_BlitSurface(cache, src, SDL_GetVideoSurface(), &dest);
+    My_SDL_BlitSurface(cache, src, Config::BackBuffer, &dest);
 }
 //---------------------------------------------------------------------------
 void Room::SaveLayer(int layer, FILE *fp)

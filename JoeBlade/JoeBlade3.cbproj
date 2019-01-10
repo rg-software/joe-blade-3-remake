@@ -101,6 +101,9 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <BCC_UseClassicCompiler>false</BCC_UseClassicCompiler>
         <LinkPackageImports>rtl.bpi;vcl.bpi</LinkPackageImports>
+        <ILINK_LibraryPath>..\Lib\ResourceFile\Win32\Debug;..\Lib\MyGifLoader\Win32\Debug;$(ILINK_LibraryPath)</ILINK_LibraryPath>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
@@ -225,6 +228,9 @@
         <CppCompile Include="ScreenPrinter.cpp">
             <DependentOn>ScreenPrinter.h</DependentOn>
             <BuildOrder>27</BuildOrder>
+        </CppCompile>
+        <CppCompile Include="SDL_rotozoom.c">
+            <BuildOrder>38</BuildOrder>
         </CppCompile>
         <CppCompile Include="SecuritySubgame.cpp">
             <DependentOn>SecuritySubgame.h</DependentOn>
@@ -352,6 +358,12 @@
                 <DeployFile LocalName=".\Win32\Debug\JoeBlade3.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>JoeBlade3.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="SDL_rotozoom.c" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

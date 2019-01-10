@@ -10,6 +10,7 @@
 #include "StatusPanel.h"
 #include "ScreenPrinter.h"
 #include "JukeBox.h"
+#include "Utils.h"
 
 #pragma package(smart_init)
 
@@ -87,7 +88,7 @@ void GameOver()
         StatusPanel().Show();
         JukeBox().Show();
         MessagePanel().Show();
-        SDL_Flip(SDL_GetVideoSurface());
+        My_SDL_Flip();
     }
 
     GameStatus = MAINMENU;

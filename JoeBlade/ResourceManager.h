@@ -54,8 +54,6 @@ class TResResourceManager : public TResourceManager
 
         TStream *GetResourceStream(char *resourcename)
         {
-//            FILE *f = fopen("dump_rf.txt", "at"); fprintf(f, "%s\n", resourcename); fclose(f);
-
             char resfile[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             int i = 0;
             while(resourcename[i] != '\\')

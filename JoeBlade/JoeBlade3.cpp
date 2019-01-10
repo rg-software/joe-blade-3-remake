@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------
-#include <sdl.h>
+#include <SDL.h>
 #include <vcl.h>
 #include <string>
 #include <fstream>
@@ -43,9 +43,10 @@ void SetOptions(const char *cmdline)
     Config::AllLiftCards = (strstr(s.c_str(), "/l ") != NULL);
     Config::InfKeysDisks = (strstr(s.c_str(), "/kd ") != NULL);
     Config::ShowFPS = (strstr(s.c_str(), "/fps ") != NULL);
-    Config::JukeBoxDisabled = (strstr(s.c_str(), "/dj ") != NULL);
-    Config::ScrollEnabled = (strstr(s.c_str(), "/se ") != NULL);
-    Config::NoSound = (strstr(s.c_str(), "/ns ") != NULL);
+	Config::JukeBoxDisabled = (strstr(s.c_str(), "/dj ") != NULL);
+	Config::ScrollEnabled = (strstr(s.c_str(), "/se ") != NULL);
+	Config::NoSound = (strstr(s.c_str(), "/ns ") != NULL);
+	Config::DoubleScreen  = (strstr(s.c_str(), "/ds ") != NULL);
 }
 //---------------------------------------------------------------------------
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
@@ -68,34 +69,42 @@ int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
         e_cmdline += " " + s;
     SetOptions(e_cmdline.c_str());
     if(Config::NoSound)
-        Config::JukeBoxDisabled = true;
+		Config::JukeBoxDisabled = true;
 
-    SDL_Init(SDL_INIT_VIDEO | /*SDL_INIT_AUDIO | */SDL_INIT_TIMER);
-    SDL_SetVideoMode(Config::ScreenParams[0], Config::ScreenParams[1], Config::ScreenParams[2], SDL_HWSURFACE | SDL_ANYFORMAT | Config::SDL_ScrnFlag);
+	int ScreenW = Config::DoubleScreen ? Config::ScreenParams[0] * 2 : Config::ScreenParams[0];
+	int ScreenH = Config::DoubleScreen ? Config::ScreenParams[1] * 2 : Config::ScreenParams[1];
+
+	SDL_Init(SDL_INIT_VIDEO | /*SDL_INIT_AUDIO | */SDL_INIT_TIMER);
+	SDL_SetVideoMode(ScreenW, ScreenH, Config::ScreenParams[2], SDL_HWSURFACE | SDL_ANYFORMAT | Config::SDL_ScrnFlag);
     SDL_WM_SetCaption("Joe Blade 3 Remake", NULL);
     SDL_ShowCursor(SDL_DISABLE);
     SDL_Surface *ico = LoadSurfaceFromGIFResource("Common\\joeblade-ico.gif");
     SDL_WM_SetIcon(ico, NULL);
     SDL_FreeSurface(ico);
 
-    ShowSplash();
-    Uint32 ticks = SDL_GetTicks();
+	SDL_Surface *v = SDL_GetVideoSurface();
+	Config::BackBuffer = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_ANYFORMAT, Config::ScreenParams[0], Config::ScreenParams[1],
+					v->format->BitsPerPixel, v->format->Rmask, v->format->Gmask, v->format->Bmask, v->format->Amask);
+	SDL_SetColorKey(Config::BackBuffer, SDL_SRCCOLORKEY, SDL_MapRGB(v->format, Config::ColorKey[0], Config::ColorKey[1], Config::ColorKey[2]));
 
-    randomize();
-    Randomize();
-    GameTimerTicks = 0;
-    TilesManager();    // инициализация
-    SoundManager();
-    Joe = new JoeBlade("Sprites\\joeblade.gif");
-    StatusPanel();
-    LoadHiTable();
-    bullet = new Bullet("Sprites\\bullet.gif");
-    enemybullet = new Bullet("Sprites\\bullet.gif");
+	ShowSplash();
+	Uint32 ticks = SDL_GetTicks();
 
-    for(vector<Smoke *>::iterator p = SmokeObjects.begin(); p != SmokeObjects.end(); p++)
-        *p = new Smoke("Sprites\\smoke.gif");
+	randomize();
+	Randomize();
+	GameTimerTicks = 0;
+	TilesManager();    // инициализация
+	SoundManager();
+	Joe = new JoeBlade("Sprites\\joeblade.gif");
+	StatusPanel();
+	LoadHiTable();
+	bullet = new Bullet("Sprites\\bullet.gif");
+	enemybullet = new Bullet("Sprites\\bullet.gif");
 
-    while(SDL_GetTicks() - ticks < 4000)  // 6000
+	for(vector<Smoke *>::iterator p = SmokeObjects.begin(); p != SmokeObjects.end(); p++)
+		*p = new Smoke("Sprites\\smoke.gif");
+
+	while(SDL_GetTicks() - ticks < 3000)  // 6000
         ;
 
     RemoveSplash();

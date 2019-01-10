@@ -14,8 +14,8 @@ void MainMenu()
 {
     Background().Show();
     StatusPanel().Show();
-    SDL_Flip(SDL_GetVideoSurface());
-    Background().Show();
+	My_SDL_Flip();
+	Background().Show();
     StatusPanel().Show();
 
     vector<AnsiString> items;

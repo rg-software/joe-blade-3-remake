@@ -27,6 +27,7 @@ const int Yoffset = 121;
 const int ColorKey[] = { 240, 0, 240 };
 const int ScreenParams[] = { 640, 480, 16 };
 const int StartX = 110;
+SDL_Surface *BackBuffer;
 
 // комната
 const int RoomHeight = GridSize * 6;
@@ -98,6 +99,7 @@ int HostagesTotal;
 
 // cheats
 Uint32 SDL_ScrnFlag;
+bool DoubleScreen;
 bool InfEnergy;
 bool InfAmmo;
 bool TimeStop;

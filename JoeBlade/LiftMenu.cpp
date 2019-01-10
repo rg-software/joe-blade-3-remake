@@ -85,7 +85,7 @@ void LiftMenu()
 
         MessagePanel().Show();
         JukeBox().Show();
-        SDL_Flip(SDL_GetVideoSurface());
+        My_SDL_Flip();
     }
 
     SoundManager().PlaySound(Sounds::LIFT);

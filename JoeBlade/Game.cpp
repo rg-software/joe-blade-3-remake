@@ -160,7 +160,7 @@ void Game()
             ScreenPrinter().Print(Config::Xoffset + Config::GridSize, Config::Yoffset, buffer);
         }
 
-        SDL_Flip(SDL_GetVideoSurface());
+        My_SDL_Flip();
         frames++;
     }
 

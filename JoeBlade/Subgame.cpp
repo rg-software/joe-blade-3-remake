@@ -114,7 +114,7 @@ bool Subgame::RunKernel()
         MessagePanel().Show();
         JukeBox().Show();
 
-        SDL_Flip(SDL_GetVideoSurface());
+        My_SDL_Flip();
 
         if(IsWinningConfiguration())
             return true;

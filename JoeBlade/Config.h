@@ -25,6 +25,7 @@ extern const int Yoffset;              // комнаты относительно угла экрана
 extern const int ColorKey[];           // RGB значения прозрачного цвета
 extern const int ScreenParams[];       // параметры экрана (ширина, высота, глубина)
 extern const int StartX;               // стартовая координата Джо Блейда
+extern SDL_Surface *BackBuffer;
 
 // комната
 extern const int RoomHeight;           // линейные
@@ -89,6 +90,7 @@ extern int HostagesTotal;
 
 // cheats
 extern Uint32 SDL_ScrnFlag;
+extern bool DoubleScreen;
 extern bool InfEnergy;
 extern bool InfAmmo;
 extern bool TimeStop;

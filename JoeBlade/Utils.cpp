@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+п»ї//---------------------------------------------------------------------------
 #pragma hdrstop
 
 #include "Utils.h"
@@ -22,6 +22,7 @@
 #include "JukeBox.h"
 #include "Background.h"
 #include "StatusPanel.h"
+#include "SDL_rotozoom.h"
 
 #include <windows.h>
 
@@ -57,7 +58,7 @@ void ClearRoomBox()
     r.x = Config::Xoffset + Config::GridSize; r.y = Config::Yoffset;
     r.w = Config::RoomWidth - Config::GridSize; r.h = Config::RoomHeight;
 
-    SDL_FillRect(SDL_GetVideoSurface(), &r, 0);
+    SDL_FillRect(Config::BackBuffer, &r, 0);
 }
 //---------------------------------------------------------------------------
 bool DefaultExitCondition()
@@ -123,7 +124,7 @@ void MyMessageBox(char *messages, void (*fun)(), bool (*exitcond)())
 
         MessagePanel().Show();
         JukeBox().Show();
-        SDL_Flip(SDL_GetVideoSurface());
+        My_SDL_Flip();
     }
 
     SoundManager().PlaySound(Sounds::MENU_CLICK);
@@ -203,25 +204,25 @@ void ClearRooms()
     Rooms.clear();
 }
 //---------------------------------------------------------------------------
-void LoadRooms()                                    // загрузить все комнаты
+void LoadRooms()                                    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 {
     ClearRooms();
-    FILE *f = fopen("joeblade3.rooms", "rt");       // список имён ресурсов комнат и самих комнат
+    FILE *f = fopen("joeblade3.rooms", "rt");       // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
     char path[255], name[255];
 
     for(;;)
     {
-        fgets(path, 255, f);                        // имя ресурса
-        fgets(name, 255, f);                        // имя комнаты (вида Z.X.Y)
+        fgets(path, 255, f);                        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        fgets(name, 255, f);                        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ Z.X.Y)
         if(feof(f))
             break;
 
-        path[strlen(path) - 1] = 0;                 // обрезаем \n
-        name[strlen(name) - 1] = 0;                 // обрезаем \n
+        path[strlen(path) - 1] = 0;                 // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ \n
+        name[strlen(name) - 1] = 0;                 // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ \n
 
-        Room *r = new Room(path);                   // загружаем комнату
-        Rooms[name] = r;                            // и кладём её в массив комнат
+        Room *r = new Room(path);                   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Rooms[name] = r;                            // пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     fclose(f);
@@ -229,33 +230,33 @@ void LoadRooms()                                    // загрузить все комнаты
 //---------------------------------------------------------------------------
 void ShuffleObjects()
 {
-    map<int, int> CObjects;                 // количество объектов разных типов <id, количество> в игре
-    map<int, int> ObjectsOnFloor;           // количество объектов (любых) на этаже (<этаж, количество>)
-    map<int, list<AnsiString> > RoomNames;  // список названий комнат данного этажа (<этаж, список имён>)
-    int liftcards = 0;                      // количество лифт-карточек в игре
+    map<int, int> CObjects;                 // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ <id, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ> пїЅ пїЅпїЅпїЅпїЅ
+    map<int, int> ObjectsOnFloor;           // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ) пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (<пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ>)
+    map<int, list<AnsiString> > RoomNames;  // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (<пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ>)
+    int liftcards = 0;                      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 
     Config::DynamitesTotal = 0;
-    for(map<AnsiString, Room *>::iterator room = Rooms.begin(); room != Rooms.end(); room++)     // пробегаем по всем комнатам игры
+    for(map<AnsiString, Room *>::iterator room = Rooms.begin(); room != Rooms.end(); room++)     // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     {
         AnsiString FloorNoStr = "";
         int idx = 1;
         while(room->first[idx] != '.')
             FloorNoStr += room->first[idx++];
 
-        int FloorNo = atoi(FloorNoStr.c_str());                     // определяем этаж текущей комнаты
+        int FloorNo = atoi(FloorNoStr.c_str());                     // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 //        char *s = room->first.c_str();
-        RoomNames[FloorNo].push_back(room->first);                  // и вносим имя комнаты в список комнат данного этажа
+        RoomNames[FloorNo].push_back(room->first);                  // пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
-        // пробегаем по всем объектам комнаты
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         for(list<Triple>::iterator p = room->second->Data[Config::ObjectsLayer].begin(); p != room->second->Data[Config::ObjectsLayer].end(); p++)
         {
-            if(p->id == TTiles::LIFTCARD)                            // если объект - лифт-карточка
-                liftcards++;                                         // просто запоминаем количество найденных карт
+            if(p->id == TTiles::LIFTCARD)                            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                liftcards++;                                         // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
             else
-                CObjects[p->id]++;                                   // иначе вносим найденный объект в список объектов
+                CObjects[p->id]++;                                   // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-            ObjectsOnFloor[FloorNo]++;                               // обновляем значение количества объектов данного этажа
+            ObjectsOnFloor[FloorNo]++;                               // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         }
     }
 
@@ -272,8 +273,8 @@ void ShuffleObjects()
     fclose(f);*/
 
     vector<int> ShuffledIDs;
-    for(map<int, int>::iterator p = CObjects.begin(); p != CObjects.end(); p++)   // составляем список идентификаторов всех найденных объектов
-        for(int i = 0; i < p->second; i++)                                        // (например: 1, 2, 1, 1, 5, 12, 5, ...)
+    for(map<int, int>::iterator p = CObjects.begin(); p != CObjects.end(); p++)   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        for(int i = 0; i < p->second; i++)                                        // (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: 1, 2, 1, 1, 5, 12, 5, ...)
             ShuffledIDs.push_back(p->first);
 
 /*    FILE *f = fopen("sdump.txt", "wt");
@@ -282,59 +283,59 @@ void ShuffleObjects()
         fprintf(f, "%d ", ShuffledIDs[i]);
     fprintf(f, "\n");*/
 
-    random_shuffle(ShuffledIDs.begin(), ShuffledIDs.end());                       // и перемешиваем его в случайном порядке
+    random_shuffle(ShuffledIDs.begin(), ShuffledIDs.end());                       // пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 /*    for(unsigned i = 0; i < ShuffledIDs.size(); i++)
         fprintf(f, "%d ", ShuffledIDs[i]);
     fclose(f);*/
 
 
-    int index = 0;                                                     // индекс в массиве перемешанных идентификаторов
-    int iteration = 0;                                                 // текущая итерация цикла установки объектов
-    vector<list<Triple>::iterator> reserved(liftcards);                // массив liftcards итераторов на зарезервированные места
+    int index = 0;                                                     // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    int iteration = 0;                                                 // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    vector<list<Triple>::iterator> reserved(liftcards);                // пїЅпїЅпїЅпїЅпїЅпїЅ liftcards пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
-    // цикл по этажам (т.к. map - сортированная коллекция, цикл идёт от нижних этажей к верхним - это важно)
+    // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅ.пїЅ. map - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
     for(map<int, list<AnsiString> >::iterator roomslist = RoomNames.begin(); roomslist != RoomNames.end(); roomslist++)
     {
-        // работаем с этажом roomslist->first
-        // цикл по комнатам этажа
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ roomslist->first
+        // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         for(list<AnsiString>::iterator roomname = roomslist->second.begin(); roomname != roomslist->second.end(); roomname++)
         {
-            Room *room = Rooms[*roomname];              // текущая комната
-            // цикл по объектам комнаты
+            Room *room = Rooms[*roomname];              // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             for(list<Triple>::iterator p = room->Data[Config::ObjectsLayer].begin(); p != room->Data[Config::ObjectsLayer].end(); p++)
             {
-                if(iteration < liftcards)           // первые liftcards мест ничем не заполняются
-                    reserved[iteration] = p;        // они лишь вносятся в список зарезервированных
+                if(iteration < liftcards)           // пїЅпїЅпїЅпїЅпїЅпїЅ liftcards пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                    reserved[iteration] = p;        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 else
-                    p->id = ShuffledIDs[index++];   // в противном случае кладём на это место текущий объект из массива ShuffledIDs
+                    p->id = ShuffledIDs[index++];   // пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ShuffledIDs
                 iteration++;
             }
         }
     }
 
-    // первые liftcards мест на самом нижнем этаже теперь зарезервированы.
-    // осталось выбрать liftcards случайных позиций на других этажах и обменять лежащие там предметы
-    // на лифтовые карточки; предметы при этом переносятся на нижний этаж в зарезервированные места
+    // пїЅпїЅпїЅпїЅпїЅпїЅ liftcards пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ liftcards пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ; пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     for(int card = 0; card < liftcards; card++)
     {
-        // выбираем случайный этаж из заведомо достижимых на данный момент
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         int floor = 1 + Config::LowerFloor + RandomRange(0, Config::LiftCardFloors[card] - Config::LowerFloor + 1);
-        int objNo = RandomRange(0, ObjectsOnFloor[floor]);           // выбираем случайный порядковый номер объекта на данном этаже
+        int objNo = RandomRange(0, ObjectsOnFloor[floor]);           // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         int curObjNo = 0;
-        // проходим по всем объектам данного этажа:
-        // сначала по комнатам этажа
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         for(list<AnsiString>::iterator roomname = RoomNames[floor].begin(); roomname != RoomNames[floor].end(); roomname++)
         {
             Room *room = Rooms[*roomname];
-            // а теперь - по объектам комнаты
+            // пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             for(list<Triple>::iterator p = room->Data[Config::ObjectsLayer].begin(); p != room->Data[Config::ObjectsLayer].end(); p++)
             {
-                if(curObjNo == objNo)                 // если номер текущего объекта совпадает с objNo
+                if(curObjNo == objNo)                 // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ objNo
                 {
-                    reserved[card]->id = p->id;       // кладём текущий объект на зарезервированное место
-                    p->id = TTiles::LIFTCARD;         // а на его старое место кладём лифт-карточку
-                    goto skip;                        // переходим к следующей карточке
+                    reserved[card]->id = p->id;       // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+                    p->id = TTiles::LIFTCARD;         // пїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                    goto skip;                        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 }
                 curObjNo++;
             }
@@ -442,7 +443,7 @@ int ShowMenu(const vector<AnsiString>& items, int min_idx, int max_idx)
 
         MessagePanel().Show();
         JukeBox().Show();
-        SDL_Flip(SDL_GetVideoSurface());
+        My_SDL_Flip();
     }
 }
 //---------------------------------------------------------------------------
@@ -654,8 +655,8 @@ void ShowSplash()
         r.h = 2 * (Config::ScreenParams[1] / 2 - j);
         j -= 3;
 
-        My_SDL_BlitSurface(splash, &r, SDL_GetVideoSurface(), &r);
-        SDL_Flip(SDL_GetVideoSurface());
+        My_SDL_BlitSurface(splash, &r, Config::BackBuffer, &r);
+        My_SDL_Flip();
         SDL_Delay(10);
 
         SDL_Event event;
@@ -685,9 +686,9 @@ void RemoveSplash()
 
         Background().Show();
         StatusPanel().Show();
-        SDL_FillRect(SDL_GetVideoSurface(), &r1, 0);
-        My_SDL_BlitSurface(splash, &r, SDL_GetVideoSurface(), &r);
-        SDL_Flip(SDL_GetVideoSurface());
+        SDL_FillRect(Config::BackBuffer, &r1, 0);
+        My_SDL_BlitSurface(splash, &r, Config::BackBuffer, &r);
+        My_SDL_Flip(); // SDL_Flip(SDL_GetVideoSurface());
         SDL_Delay(10);
 
         SDL_Event event;
@@ -703,7 +704,7 @@ void ShowOriginalSplash()
     SDL_Rect r;
     r.x = Config::Xoffset + Config::GridSize;
     r.y = Config::Yoffset;
-    My_SDL_BlitSurface(splash, NULL, SDL_GetVideoSurface(), &r);
+    My_SDL_BlitSurface(splash, NULL, Config::BackBuffer, &r);
     SDL_FreeSurface(splash);
 }
 
@@ -713,7 +714,7 @@ void ShowOriginalScreen()
     SDL_Rect r;
     r.x = Config::Xoffset + (Config::GridSize + Config::RoomWidth) / 2;
     r.y = Config::Yoffset;
-    My_SDL_BlitSurface(screen, NULL, SDL_GetVideoSurface(), &r);
+    My_SDL_BlitSurface(screen, NULL, Config::BackBuffer, &r);
     SDL_FreeSurface(screen);
 }
 
@@ -723,14 +724,14 @@ void ShowObjectives()
     SDL_Rect r;
     r.x = Config::Xoffset + Config::GridSize;
     r.y = Config::Yoffset + ScreenPrinter().CharW();
-    My_SDL_BlitSurface(TilesManager().GetTileByID(TTiles::HOSTAGE), NULL, SDL_GetVideoSurface(), &r);
+    My_SDL_BlitSurface(TilesManager().GetTileByID(TTiles::HOSTAGE), NULL, Config::BackBuffer, &r);
     r.x = Config::Xoffset + 27 * ScreenPrinter().CharH();
     r.y = Config::Yoffset + 3 * ScreenPrinter().CharW();
-    My_SDL_BlitSurface(crax, NULL, SDL_GetVideoSurface(), &r);
+    My_SDL_BlitSurface(crax, NULL, Config::BackBuffer, &r);
     SDL_FreeSurface(crax);
     r.x = Config::Xoffset + Config::GridSize;
     r.y = Config::Yoffset + 5 * ScreenPrinter().CharW();
-    My_SDL_BlitSurface(TilesManager().GetTileByID(TTiles::DYNAMITE), NULL, SDL_GetVideoSurface(), &r);
+    My_SDL_BlitSurface(TilesManager().GetTileByID(TTiles::DYNAMITE), NULL, Config::BackBuffer, &r);
 }
 
 void ShowJB3Splash()
@@ -739,7 +740,7 @@ void ShowJB3Splash()
     SDL_Rect r;
     r.x = Config::Xoffset + Config::GridSize;
     r.y = Config::Yoffset;
-    My_SDL_BlitSurface(splash, NULL, SDL_GetVideoSurface(), &r);
+    My_SDL_BlitSurface(splash, NULL, Config::BackBuffer, &r);
     SDL_FreeSurface(splash);
 }
 
@@ -749,7 +750,7 @@ void ShowRRSplash()
     SDL_Rect r;
     r.x = Config::Xoffset + Config::GridSize;
     r.y = Config::Yoffset;
-    My_SDL_BlitSurface(splash, NULL, SDL_GetVideoSurface(), &r);
+    My_SDL_BlitSurface(splash, NULL, Config::BackBuffer, &r);
     SDL_FreeSurface(splash);
 }
 
@@ -760,7 +761,7 @@ void ShowPhoto()
     SDL_Rect r;
     r.x = Config::Xoffset + Config::GridSize;
     r.y = Config::Yoffset;
-    My_SDL_BlitSurface(splash, NULL, SDL_GetVideoSurface(), &r);
+    My_SDL_BlitSurface(splash, NULL, Config::BackBuffer, &r);
     SDL_FreeSurface(splash);
 }
 
@@ -830,6 +831,17 @@ void ShowHiTable()
     }
 
     MyMessageBox(message.c_str());
+}
+//---------------------------------------------------------------------------
+int My_SDL_Flip()
+{
+	int zoom = Config::DoubleScreen ? 2 : 1;
+    SDL_Surface* r = zoomSurface(Config::BackBuffer, zoom, zoom, SMOOTHING_OFF);
+    
+    My_SDL_BlitSurface(r, NULL, SDL_GetVideoSurface(), NULL);
+    SDL_FreeSurface(r);
+
+    SDL_Flip(SDL_GetVideoSurface());
 }
 //---------------------------------------------------------------------------
 int My_SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect)
