@@ -3,7 +3,7 @@
 #define EnemyH
 
 #include "GameCharacter.h"
-#include <sdl.h>
+#include <SDL.h>
 #include <math.hpp>
 
 //---------------------------------------------------------------------------

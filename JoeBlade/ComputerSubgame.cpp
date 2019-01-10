@@ -130,7 +130,7 @@ void TComputerSubgame::ShowObjectsMenu()
     menu.push_back("");
     menu.push_back("select an item");
     menu.push_back("");
-    for(unsigned i = 0; i < min(4, FinalList.size()); i++)
+	for(unsigned i = 0; i < std::min((size_t)4, (size_t)FinalList.size()); i++)
         menu.push_back(msgs[FinalList[i].first]);
 
     int result;
@@ -151,8 +151,11 @@ void TComputerSubgame::ShowObjectsMenu()
     }
 
     const char *floorName = (floor == Joe->CurrentRoom.Z) ? "this floor" : GetFloorName(floor);
-    AnsiString msg;
-    MyMessageBox((msg.sprintf("-1 2>you can find|-1 3>%s|-1 4>on|-1 5>%s|-1 7>press space to continue|\0", msgs[objid], floorName)).c_str());
+	AnsiString msgs_objid = msgs[objid];
+	AnsiString msg;
+	msg.sprintf("-1 2>you can find|-1 3>%s|-1 4>on|-1 5>%s|-1 7>press space to continue|\0", msgs_objid.c_str(), floorName);
+
+	MyMessageBox(msg.c_str());
 }
 //---------------------------------------------------------------------------
 void TComputerSubgame::Run()

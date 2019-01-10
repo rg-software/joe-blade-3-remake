@@ -9,7 +9,7 @@
 #include <memory>
 #include "Globals.h"
 #include "Room.h"
-#include <sdl.h>
+#include <SDL.h>
 #include <vector>
 
 #pragma package(smart_init)

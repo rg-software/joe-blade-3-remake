@@ -2,7 +2,7 @@
 #ifndef BackgroundH
 #define BackgroundH
 
-#include <sdl.h>
+#include <SDL.h>
 #include "Utils.h"
 
 //---------------------------------------------------------------------------

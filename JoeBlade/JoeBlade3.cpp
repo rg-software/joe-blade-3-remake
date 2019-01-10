@@ -25,6 +25,12 @@
 #include "JukeBox.h"
 #include "Utils.h"
 
+#pragma comment(lib, "SDL.lib")
+#pragma comment(lib, "bass.lib")
+#pragma comment(lib, "SDL_Image.lib")
+#pragma comment(lib, "ResFile.lib")
+#pragma comment(lib, "MyGifLoader.lib")
+
 //---------------------------------------------------------------------------
 void SetOptions(const char *cmdline)
 {
@@ -42,7 +48,7 @@ void SetOptions(const char *cmdline)
     Config::NoSound = (strstr(s.c_str(), "/ns ") != NULL);
 }
 //---------------------------------------------------------------------------
-WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR cmdline, int)
+int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
  try{
 
@@ -55,7 +61,7 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR cmdline, int)
         SetProcessAffinityMask( hProcess, 1L );
     }
 
-    std::string e_cmdline = cmdline;
+    std::string e_cmdline = GetCommandLineA();//cmdline;
     std::string s;
     std::ifstream is("JoeBlade3.cfg");
     while(is >> s)
@@ -133,7 +139,6 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR cmdline, int)
  }
  catch(...) {}
 
-
-    return 0;
+ return 0;
 }
 //---------------------------------------------------------------------------

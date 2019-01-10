@@ -3,7 +3,7 @@
 
 #include "MessagePanel.h"
 #include <memory>
-#include <sdl.h>
+#include <SDL.h>
 #include <vcl.h>
 #include "Globals.h"
 #include "Config.h"

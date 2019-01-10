@@ -1,6 +1,7 @@
 //---------------------------------------------------------------------------
 #pragma hdrstop
-#include <sdl.h>
+#include <SDL.h>
+#include <algorithm>
 
 #include "JoeBlade.h"
 #include "Config.h"
@@ -128,7 +129,7 @@ void JoeBlade::Update()
     if(!(MaskTime + Config::ShieldTime > GameTimerTicks) && enemybullet->Hits(this) &&
        !(ArmourTime + Config::ShieldTime > GameTimerTicks) && !Config::InfEnergy)
     {
-        Energy = max(0, Energy - Config::EnergyFactor);
+        Energy = std::max(0, Energy - Config::EnergyFactor);
         enemybullet->Remove();
     }
     
@@ -278,9 +279,9 @@ void JoeBlade::Update()
             if(object.id == TTiles::HOSTAGE && --Config::HostagesTotal == 0)
                 ShowNextObjective(HOSTAGES_FOUND);
             if(object.id == TTiles::AMMUNITION)
-                Ammo = min(Config::InitialAmmo, Ammo + Config::AmmoPackSize);
+                Ammo = std::min(Config::InitialAmmo, Ammo + Config::AmmoPackSize);
             else if(object.id == TTiles::FOOD)
-                Energy = min(Config::InitialEnergy, Energy + Config::EnergyPackSize);
+                Energy = std::min(Config::InitialEnergy, Energy + Config::EnergyPackSize);
             else if(object.id == TTiles::MASK)
                 MaskTime = GameTimerTicks;
             else if(object.id == TTiles::ARMOUR)

@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <vcl.h>
-#include <sdl.h>
+#include <SDL.h>
 #include <list>
 #include "ComputerSubgame.h"
 

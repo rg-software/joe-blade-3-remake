@@ -44,8 +44,9 @@ void TForm1::SaveConfiguration()
     {
         TCheckBox *p = dynamic_cast<TCheckBox*>(Components[i]);
         if(p != NULL && p->Checked)
-        {
-            std::string key = "/" + std::string(p->Name.c_str()).substr(3);
+		{
+			AnsiString ps = p->Name;
+			std::string key = "/" + std::string(ps.c_str()).substr(3);
             os << key << " ";
         }
     }

@@ -10,6 +10,7 @@
 #include "ResourceManager.h"
 #include "TilesManager.h"
 #include <memory>
+#include <algorithm>
 #include <Math.hpp>
 
 #pragma package(smart_init)
@@ -139,7 +140,7 @@ bool Room::Intersects(const Sprite* sprite, int sysobj, int layer, double coeff,
                                                  p->y * Config::GridSize + tile->h)))
             {
                 // r - прямоугольник пересечения; если пересечение удовлетворяет критериям, return true
-                if((int)r.Width() >= min(sprite->GetW(), w_margin) && (int)r.Height() >= min(sprite->GetH(), h_margin))
+                if((int)r.Width() >= std::min(sprite->GetW(), w_margin) && (int)r.Height() >= min(sprite->GetH(), h_margin))
                 {
                     *object = *p;
                     return true;

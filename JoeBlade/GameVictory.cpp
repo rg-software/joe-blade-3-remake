@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 #pragma hdrstop
 
-#include <sdl.h>
+#include <SDL.h>
 #include "GameVictory.h"
 #include "SoundManager.h"
 #include "Globals.h"

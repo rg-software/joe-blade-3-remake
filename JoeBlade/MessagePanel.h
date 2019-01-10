@@ -3,7 +3,7 @@
 #ifndef MessagePanelH
 #define MessagePanelH
 
-#include <sdl.h>
+#include <SDL.h>
 #include <list>
 #include <vcl.h>
 

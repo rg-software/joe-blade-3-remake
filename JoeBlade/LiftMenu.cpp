@@ -1,6 +1,8 @@
 //---------------------------------------------------------------------------
 #pragma hdrstop
 
+#include <algorithm>
+
 #include "LiftMenu.h"
 #include "Config.h"
 #include "Globals.h"
@@ -40,13 +42,13 @@ void LiftMenu()
         Uint8 *keys = SDL_GetKeyState(NULL);
         if(keys[SDLK_DOWN] == SDL_PRESSED)
         {
-            CurFloorIdx = max(CurFloorIdx - 1, Config::LowerFloor);
+			CurFloorIdx = std::max(CurFloorIdx - 1, Config::LowerFloor);
             SoundManager().PlaySound(Sounds::LIFTBUTTON);
             SDL_Delay(Config::MenuDelay);
         }
         else if(keys[SDLK_UP] == SDL_PRESSED)
         {
-            CurFloorIdx = min(CurFloorIdx + 1, Config::LiftCardFloors[cards]);
+			CurFloorIdx = std::min(CurFloorIdx + 1, Config::LiftCardFloors[cards]);
             SoundManager().PlaySound(Sounds::LIFTBUTTON);
             SDL_Delay(Config::MenuDelay);
         }

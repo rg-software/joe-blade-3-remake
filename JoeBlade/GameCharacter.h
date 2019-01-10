@@ -3,7 +3,7 @@
 #define GameCharacterH
 
 #include "Sprite.h"
-#include <sdl.h>
+#include <SDL.h>
 #include "Config.h"
 
 //---------------------------------------------------------------------------

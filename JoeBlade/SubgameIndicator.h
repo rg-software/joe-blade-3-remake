@@ -3,7 +3,7 @@
 #define SubgameIndicatorH
 
 #include <vector>
-#include <sdl.h>
+#include <SDL.h>
 #include "Utils.h"
 
 using namespace std;

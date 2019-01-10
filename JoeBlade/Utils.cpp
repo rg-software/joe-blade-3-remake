@@ -455,7 +455,7 @@ int SelectSlot()
 
     for(int i = 1; i <= Config::N_of_slots; i++)
     {
-        char filename[] = { 's', 'l', 'o', 't', i + '0', '.', 's', 'a', 'v', 0 };
+		char filename[] = { 's', 'l', 'o', 't', char(i + '0'), '.', 's', 'a', 'v', 0 };
 
         FILE *fp = fopen(filename, "rb");
         unsigned short d, m, y;
@@ -490,7 +490,7 @@ void SaveGame()
     if(slot == -1)
         return;
 
-    char filename[] = { 's', 'l', 'o', 't', slot + '0', '.', 's', 'a', 'v', 0 };
+	char filename[] = { 's', 'l', 'o', 't', char(slot + '0'), '.', 's', 'a', 'v', 0 };
 
     FILE *fp = fopen(filename, "wb");
     unsigned short d, m, y;
@@ -560,7 +560,7 @@ void LoadGame()
     if(slot == -1)
         return;
 
-    char filename[] = { 's', 'l', 'o', 't', slot + '0', '.', 's', 'a', 'v', 0 };
+    char filename[] = { 's', 'l', 'o', 't', char(slot + '0'), '.', 's', 'a', 'v', 0 };
 
     FILE *fp = fopen(filename, "rb");
     unsigned short d, m, y;

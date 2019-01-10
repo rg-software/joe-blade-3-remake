@@ -3,7 +3,7 @@
 #ifndef ConfigH
 #define ConfigH
 
-#include <sdl.h>
+#include <SDL.h>
 
 //---------------------------------------------------------------------------
 namespace Config {

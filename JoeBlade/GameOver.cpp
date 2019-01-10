@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 #pragma hdrstop
 
-#include <sdl.h>
+#include <SDL.h>
 #include "GameOver.h"
 #include "Globals.h"
 #include "Config.h"

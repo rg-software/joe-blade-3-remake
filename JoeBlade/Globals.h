@@ -3,7 +3,7 @@
 #define GlobalsH
 
 #include <vcl.h>
-#include <sdl.h>
+#include <SDL.h>
 #include <vector>
 #include <map>
 

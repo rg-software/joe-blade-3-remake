@@ -59,7 +59,10 @@ class TResResourceManager : public TResourceManager
             char resfile[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             int i = 0;
             while(resourcename[i] != '\\')
-                resfile[i] = resourcename[i++];
+			{
+				resfile[i] = resourcename[i];
+				i++;
+			}
             i++;
 
             ResourceFile *p = ResFiles[resfile];

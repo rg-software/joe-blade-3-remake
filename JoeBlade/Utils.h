@@ -2,7 +2,7 @@
 #ifndef UtilsH
 #define UtilsH
 
-#include <sdl.h>
+#include <SDL.h>
 #include <vector>
 #include <vcl.h>
 #include "Sprite.h"

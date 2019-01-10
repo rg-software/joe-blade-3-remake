@@ -5,8 +5,8 @@
 
 #include <vector>
 #include "Globals.h"
-#include <sdl.h>
-#include <MyGIFLoader.h>
+#include <SDL.h>
+#include <MyGIFStructure.h>
 
 using namespace std;
 

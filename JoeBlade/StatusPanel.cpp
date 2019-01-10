@@ -7,7 +7,7 @@
 #include "StatusPanel.h"
 #include <memory>
 #include <vcl.h>
-#include "MyGifLoader.h"
+#include "MyGIFStructure.h"
 #include "TilesManager.h"
 #include "JoeBlade.h"
 #include "Utils.h"
@@ -19,14 +19,14 @@
 
 #pragma package(smart_init)
 
-TStatusPanel& StatusPanel()
+TMyStatusPanel& StatusPanel()
 {
-    static TStatusPanel panel;
+    static TMyStatusPanel panel;
 
     return panel;
 }
 //---------------------------------------------------------------------------
-TStatusPanel::TStatusPanel()
+TMyStatusPanel::TMyStatusPanel()
 {
     coords[TTiles::KEY] = pair<int, int>(257, 9);
     coords[TTiles::DISK] = pair<int, int>(257, 73);
@@ -40,16 +40,16 @@ TStatusPanel::TStatusPanel()
     hearts = LoadSurfaceFromGIFResource("Common\\hearts.gif");
 }
 //---------------------------------------------------------------------------
-void TStatusPanel::PrintNumber(int number, int x, int y, int width)
+void TMyStatusPanel::PrintNumber(int number, int x, int y, int width)
 {
     char str[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    char format[] = { '%', '0', width + '0', 'd'} ;
+    char format[] = { '%', '0', char(width + '0'), 'd'} ;
 
     sprintf(str, format, number);
     ScreenPrinter().Print(Config::StatusPanelX + x, Config::StatusPanelY + y, str);
 }
 //---------------------------------------------------------------------------
-void TStatusPanel::Show()
+void TMyStatusPanel::Show()
 {
     for(map<int, pair<int, int> >::iterator p = coords.begin(); p != coords.end(); p++)
         PrintNumber(Inventory[p->first], p->second.first, p->second.second, 2);

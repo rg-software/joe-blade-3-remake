@@ -15,8 +15,8 @@ class TComputerSubgame : public Subgame
         virtual void RightOperation();
         virtual void FireOperation();
 
-        void ShowObjectsMenu();
     public:
+        void ShowObjectsMenu();
         void Run();
 };
 //---------------------------------------------------------------------------
