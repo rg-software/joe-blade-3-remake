@@ -57,8 +57,9 @@ void CreateResource(const AnsiString& ResFileName)
     FILE *resfile = fopen((ResFileName + ".res").c_str(), "wb");
 
     for(list<AnsiString>::iterator p = files.begin(); p != files.end(); p++)
-    {
-        FILE *temp = fopen((Form1->Path->Text + "\\" + *p).c_str(), "rb");
+	{
+		AnsiString path = Form1->Path->Text + "\\" + *p;
+		FILE *temp = fopen(path.c_str(), "rb");
         fseek(temp, 0, SEEK_END);
         int size = ftell(temp);
         fseek(temp, 0, SEEK_SET);
@@ -87,7 +88,7 @@ void __fastcall TForm1::GoButtonClick(TObject *Sender)
 
     CreateResource(ResFileName);
 
-    Application->MessageBox("Done!", "", 0);
+    Application->MessageBox(L"Done!", L"", 0);
 }
 //---------------------------------------------------------------------------
  
