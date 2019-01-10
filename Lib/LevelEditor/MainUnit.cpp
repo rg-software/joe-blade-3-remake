@@ -71,7 +71,7 @@ void RepaintLayers()
                 int maxx = xr < Level[curlayer].size() ? xr : Level[curlayer].size() - 1;
                 int maxy = yr < Level[curlayer][0].size() ? yr : Level[curlayer][0].size() - 1;
 
-                MainForm->BackBuffer->Canvas->Brush->Color = TRANSPARENTCOLOR;
+                MainForm->BackBuffer->Canvas->Brush->Color = (System::Uitypes::TColor)TRANSPARENTCOLOR;
                 bool highlighting = (curlayer == CurrentLayer) && MainForm->HighlightCheckBox->Checked;
 
                 for(int x = minx; x <= maxx; x++)
@@ -234,8 +234,9 @@ void __fastcall TMainForm::OpenButtonClick(TObject *Sender)
         return;
 
     int n_of_tiles;
-    map<WORD, TilesPaletteElement*> Elements;
-    FILE* infile = fopen(OpenDialog->FileName.c_str(), "rb");
+	map<WORD, TilesPaletteElement*> Elements;
+	AnsiString fname = OpenDialog->FileName;
+	FILE* infile = fopen(fname.c_str(), "rb");
     char str[256];
 
     fread(&n_of_tiles, sizeof(int), 1, infile);     // number of tiles
@@ -300,7 +301,8 @@ void __fastcall TMainForm::SaveButtonClick(TObject *Sender)
                         IDs[Level[layer][i][j]->Path] = lastid++;
     }
 
-    FILE* outfile = fopen(SaveDialog->FileName.c_str(), "wb");
+	AnsiString fname = SaveDialog->FileName;
+	FILE* outfile = fopen(fname.c_str(), "wb");
 
     int n_of_tiles = IDs.size();
     fwrite(&n_of_tiles, sizeof(int), 1, outfile);     // number of tiles

@@ -4,7 +4,7 @@
 #pragma hdrstop
 
 #include "TilesPaletteElement.h"
-#include <gifimage.hpp>
+#include <GIFimg.hpp>
 #include "constants.h"
 #include <set>
 
@@ -23,7 +23,7 @@ TilesPaletteElement::TilesPaletteElement(int GroupID, const AnsiString& FileName
     theimage = new TImage(this);
 
     gif->LoadFromFile(FileName);
-    gif->Images->SubImages[0]->Bitmap->SaveToStream(p);
+    gif->Images->Frames[0]->Bitmap->SaveToStream(p);
 
     Height = gif->Height + 10;
     Width = gif->Width + 10;
@@ -56,7 +56,7 @@ TilesPaletteElement::TilesPaletteElement(int GroupID, const AnsiString& FileName
             frames[i]->Transparent = true;
             frames[i]->Picture->Bitmap->TransparentMode = tmFixed;
             frames[i]->Picture->Bitmap->TransparentColor = TRANSPARENTCOLOR;
-            frames[i]->Picture->Bitmap->Assign(gif->Images->SubImages[i]->Bitmap);
+            frames[i]->Picture->Bitmap->Assign(gif->Images->Frames[i]->Bitmap);
         }
         AnimatedTiles.insert(this);
     }

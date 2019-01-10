@@ -73,6 +73,7 @@ bool TilesPalette::IsArrow(TilesPaletteElement *element)
     return element == *(PaletteImages[MainForm->TilesPaletteCtrl->TabIndex].begin());
 }
 //---------------------------------------------------------------------------
+#include <dir.h>
 void TilesPalette::LoadFromDir(AnsiString DirName)
 {
     TSearchRec dir, file;      // current dir and current file
@@ -90,26 +91,33 @@ void TilesPalette::LoadFromDir(AnsiString DirName)
             TabCount++;
             int CurrentOffset = 0;
 
-            // insert arrow
-            TilesPaletteElement *image = new TilesPaletteElement(TabCount, "arrow.gif", MainForm->TilesScrollBox);
-            image->Down = true;
-            PaletteImages.push_back();
-            PaletteImages[TabCount - 1].push_back(image);
-            image->Left = CurrentOffset;
-            CurrentOffset += image->Width;
-            // end insert
+			// insert arrow
+			char dirr[512];
+			char sign[512];
+			getcwd(dirr, 512);
+			FILE *ff = fopen("arrow.gif", "rb");
+			fread(sign, 512, 1, ff);
+            fclose(ff);
 
-            if(FindFirst(DirName + "\\" + dir.Name + "\\*.gif", faArchive, file) == 0)
-            {
-                do
-                {
-                    AnsiString gifname = DirName + "\\" + dir.Name + "\\" + file.Name;
+			TilesPaletteElement *image = new TilesPaletteElement(TabCount, "arrow.gif", MainForm->TilesScrollBox);
+			image->Down = true;
+			PaletteImages.push_back(list<TilesPaletteElement *>());
+			PaletteImages[TabCount - 1].push_back(image);
+			image->Left = CurrentOffset;
+			CurrentOffset += image->Width;
+			// end insert
 
-                    TilesPaletteElement *image = new TilesPaletteElement(TabCount, gifname, MainForm->TilesScrollBox);
-                    Elements[gifname] = image;
-                    PaletteImages[TabCount - 1].push_back(image);
+			if(FindFirst(DirName + "\\" + dir.Name + "\\*.gif", faArchive, file) == 0)
+			{
+				do
+				{
+					AnsiString gifname = DirName + "\\" + dir.Name + "\\" + file.Name;
 
-                    image->Left = CurrentOffset;
+					TilesPaletteElement *image = new TilesPaletteElement(TabCount, gifname, MainForm->TilesScrollBox);
+					Elements[gifname] = image;
+					PaletteImages[TabCount - 1].push_back(image);
+
+					image->Left = CurrentOffset;
                     CurrentOffset += image->Width;
                 }
                 while(!FindNext(file));
