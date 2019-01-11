@@ -25,6 +25,7 @@ __published:	// IDE-managed Components
     TLabel *Label2;
     TLabel *Label3;
     TButton *btnSave;
+	TCheckBox *cb_ds;
     void __fastcall btnSaveClick(TObject *Sender);
 private:	// User declarations
 public:		// User declarations

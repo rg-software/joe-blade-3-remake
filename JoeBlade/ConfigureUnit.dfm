@@ -4,7 +4,7 @@ object Form1: TForm1
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Configuration'
-  ClientHeight = 375
+  ClientHeight = 406
   ClientWidth = 169
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -867,7 +867,7 @@ object Form1: TForm1
   end
   object Label2: TLabel
     Left = 8
-    Top = 112
+    Top = 136
     Width = 127
     Height = 18
     Caption = 'Sound Options'
@@ -880,7 +880,7 @@ object Form1: TForm1
   end
   object Label3: TLabel
     Left = 8
-    Top = 192
+    Top = 216
     Width = 61
     Height = 18
     Caption = 'Cheats'
@@ -896,7 +896,7 @@ object Form1: TForm1
     Top = 32
     Width = 97
     Height = 17
-    Caption = 'Full screen'
+    Caption = 'Full Screen'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -907,7 +907,7 @@ object Form1: TForm1
   end
   object cb_ie: TCheckBox
     Left = 8
-    Top = 216
+    Top = 240
     Width = 121
     Height = 17
     Caption = 'Infinite Energy'
@@ -921,7 +921,7 @@ object Form1: TForm1
   end
   object cb_ia: TCheckBox
     Left = 8
-    Top = 240
+    Top = 264
     Width = 97
     Height = 17
     Caption = 'Infinite Ammo'
@@ -935,7 +935,7 @@ object Form1: TForm1
   end
   object cb_t: TCheckBox
     Left = 8
-    Top = 264
+    Top = 288
     Width = 121
     Height = 17
     Caption = 'Stop All Timers'
@@ -963,7 +963,7 @@ object Form1: TForm1
   end
   object cb_dj: TCheckBox
     Left = 8
-    Top = 160
+    Top = 184
     Width = 137
     Height = 17
     Caption = 'Disable Jukebox'
@@ -977,7 +977,7 @@ object Form1: TForm1
   end
   object cb_l: TCheckBox
     Left = 8
-    Top = 288
+    Top = 312
     Width = 129
     Height = 17
     Caption = 'Get All Lift Cards'
@@ -991,7 +991,7 @@ object Form1: TForm1
   end
   object cb_kd: TCheckBox
     Left = 8
-    Top = 312
+    Top = 336
     Width = 161
     Height = 17
     Caption = 'Get 50 Keys and Disks'
@@ -1005,7 +1005,7 @@ object Form1: TForm1
   end
   object cb_ns: TCheckBox
     Left = 8
-    Top = 136
+    Top = 160
     Width = 97
     Height = 17
     Caption = 'No Sound'
@@ -1033,11 +1033,25 @@ object Form1: TForm1
   end
   object btnSave: TButton
     Left = 28
-    Top = 344
+    Top = 368
     Width = 113
     Height = 25
     Caption = 'Save Configuration'
     TabOrder = 10
     OnClick = btnSaveClick
+  end
+  object cb_ds: TCheckBox
+    Left = 8
+    Top = 104
+    Width = 137
+    Height = 17
+    Caption = 'Double Size'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 11
   end
 end
