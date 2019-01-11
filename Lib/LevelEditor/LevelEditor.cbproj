@@ -118,6 +118,10 @@
         <None Include="constants.h">
             <BuildOrder>6</BuildOrder>
         </None>
+        <RcItem Include="joeblade.ico">
+            <ResourceType>ICON</ResourceType>
+            <ResourceId>Icon_1</ResourceId>
+        </RcItem>
         <CppCompile Include="LevelEditor.cpp">
             <BuildOrder>0</BuildOrder>
         </CppCompile>
@@ -177,6 +181,12 @@
             <Deployment Version="3">
                 <DeployFile Condition="'$(DynamicRTL)'=='true' And '$(Multithreaded)'!='true'" LocalName="$(BDS)\bin\cc32c260.dll" Class="DependencyModule">
                     <Platform Name="Win32">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="joeblade.ico" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
