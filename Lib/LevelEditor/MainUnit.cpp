@@ -155,7 +155,7 @@ void __fastcall TMainForm::FormShow(TObject *Sender)
     Coeffs.resize(N_of_layers);
     for(int i = 0; i < N_of_layers; i++)
     {
-        LayersListBox->Items->Add("слой " + AnsiString(i));
+        LayersListBox->Items->Add("layer " + AnsiString(i));
         LayersListBox->Checked[i] = true;
         Coeffs[i] = 1;
         ResizeLevel(i, 1, 1);
