@@ -1,6 +1,8 @@
 # JOE BLADE 3 REMAKE
 (c) 2004 by Maxim Mozgovoy and Anton Mozgovoy
 
+![](joe-screen.png)
+
 March 2010 revision: bugfixes, smooth scrolling, separate configuration tool.
 January 2019 revision: bugfixes, double screen resolution, upgrade to C++Builder 10.
 
@@ -8,7 +10,7 @@ January 2019 revision: bugfixes, double screen resolution, upgrade to C++Builder
 
 ## HISTORY AND GAME DESCRIPTION
 
-Joe Blade 3 Remake is based on the original game Joe Blade 3, which is copyright 1989 by Players Software. Joe Blade 3 was available on Amstrad CPC and ZX Spectrum home computers.
+Joe Blade 3 Remake is based on the original game Joe Blade 3, (c) 1989 by Players Software. Joe Blade 3 was available on Amstrad CPC and ZX Spectrum home computers.
 
 Joe Blade 3 offers an amazing action in a building, consisting of 31 floors + a roof (which gives you 542 locations in total). Your mission includes several objectives:
 
