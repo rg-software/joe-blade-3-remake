@@ -1,0 +1,6 @@
+syntax: glob
+**/__history/**
+**/*.local
+**/*.stat
+**/*.res
+**/Win32/**

@@ -1,0 +1,108 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{950EEC13-56E6-440C-84E8-093D405BCBA8}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Lib\LevelEditor\LevelEditor.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Lib\MyGIFLoader\MyGIFLoader.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Lib\ResourceFile\ResFile.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="JoeBlade\JoeBlade3.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="JoeBlade\Configure.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Lib\MakeResFile\MakeResFile.cbproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Lib\LevOpt\LevOpt.cbproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="LevelEditor">
+        <MSBuild Projects="Lib\LevelEditor\LevelEditor.cbproj"/>
+    </Target>
+    <Target Name="LevelEditor:Clean">
+        <MSBuild Projects="Lib\LevelEditor\LevelEditor.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LevelEditor:Make">
+        <MSBuild Projects="Lib\LevelEditor\LevelEditor.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyGIFLoader">
+        <MSBuild Projects="Lib\MyGIFLoader\MyGIFLoader.cbproj"/>
+    </Target>
+    <Target Name="MyGIFLoader:Clean">
+        <MSBuild Projects="Lib\MyGIFLoader\MyGIFLoader.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyGIFLoader:Make">
+        <MSBuild Projects="Lib\MyGIFLoader\MyGIFLoader.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="ResFile">
+        <MSBuild Projects="Lib\ResourceFile\ResFile.cbproj"/>
+    </Target>
+    <Target Name="ResFile:Clean">
+        <MSBuild Projects="Lib\ResourceFile\ResFile.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ResFile:Make">
+        <MSBuild Projects="Lib\ResourceFile\ResFile.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="JoeBlade3">
+        <MSBuild Projects="JoeBlade\JoeBlade3.cbproj"/>
+    </Target>
+    <Target Name="JoeBlade3:Clean">
+        <MSBuild Projects="JoeBlade\JoeBlade3.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="JoeBlade3:Make">
+        <MSBuild Projects="JoeBlade\JoeBlade3.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Configure">
+        <MSBuild Projects="JoeBlade\Configure.cbproj"/>
+    </Target>
+    <Target Name="Configure:Clean">
+        <MSBuild Projects="JoeBlade\Configure.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Configure:Make">
+        <MSBuild Projects="JoeBlade\Configure.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="MakeResFile">
+        <MSBuild Projects="Lib\MakeResFile\MakeResFile.cbproj"/>
+    </Target>
+    <Target Name="MakeResFile:Clean">
+        <MSBuild Projects="Lib\MakeResFile\MakeResFile.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MakeResFile:Make">
+        <MSBuild Projects="Lib\MakeResFile\MakeResFile.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="LevOpt">
+        <MSBuild Projects="Lib\LevOpt\LevOpt.cbproj"/>
+    </Target>
+    <Target Name="LevOpt:Clean">
+        <MSBuild Projects="Lib\LevOpt\LevOpt.cbproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LevOpt:Make">
+        <MSBuild Projects="Lib\LevOpt\LevOpt.cbproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="LevelEditor;MyGIFLoader;ResFile;JoeBlade3;Configure;MakeResFile;LevOpt"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="LevelEditor:Clean;MyGIFLoader:Clean;ResFile:Clean;JoeBlade3:Clean;Configure:Clean;MakeResFile:Clean;LevOpt:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="LevelEditor:Make;MyGIFLoader:Make;ResFile:Make;JoeBlade3:Make;Configure:Make;MakeResFile:Make;LevOpt:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
