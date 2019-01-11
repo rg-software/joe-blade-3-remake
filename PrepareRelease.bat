@@ -1,6 +1,9 @@
 @echo off
 rmdir /q /s Release
+del JoeBlade3_remake.zip
 md Release
+
+call PrepareTools.bat
 
 :: Prepare levels
 copy Resources\LevOpt.exe Resources\Levels\
@@ -39,6 +42,8 @@ copy JoeBlade\Win32\Release\*.exe Release\
 :: Copy additional files
 copy JoeBlade\joeblade3.hitbl Release\
 copy JoeBlade\joeblade3.music Release\
+copy JoeBlade\JoeBlade3.cfg Release\
+copy Readme.md Release\
 type nul > Release\slot1.sav
 type nul > Release\slot2.sav
 type nul > Release\slot3.sav
@@ -46,3 +51,6 @@ type nul > Release\slot4.sav
 type nul > Release\slot5.sav
 type nul > Release\slot6.sav
 type nul > Release\slot7.sav
+
+powershell.exe -nologo -noprofile -command "& { Add-Type -A 'System.IO.Compression.FileSystem'; [IO.Compression.ZipFile]::CreateFromDirectory('Release', 'JoeBlade3_remake.zip'); }"
+rmdir /q /s Release

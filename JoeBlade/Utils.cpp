@@ -1,4 +1,4 @@
-﻿//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 #pragma hdrstop
 
 #include "Utils.h"
@@ -204,25 +204,25 @@ void ClearRooms()
     Rooms.clear();
 }
 //---------------------------------------------------------------------------
-void LoadRooms()                                    // ��������� ��� �������
+void LoadRooms()                                    // загрузить все комнаты
 {
     ClearRooms();
-    FILE *f = fopen("joeblade3.rooms", "rt");       // ������ ��� �������� ������ � ����� ������
+    FILE *f = fopen("joeblade3.rooms", "rt");       // список имён ресурсов комнат и самих комнат
 
     char path[255], name[255];
 
     for(;;)
     {
-        fgets(path, 255, f);                        // ��� �������
-        fgets(name, 255, f);                        // ��� ������� (���� Z.X.Y)
+        fgets(path, 255, f);                        // имя ресурса
+        fgets(name, 255, f);                        // имя комнаты (вида Z.X.Y)
         if(feof(f))
             break;
 
-        path[strlen(path) - 1] = 0;                 // �������� \n
-        name[strlen(name) - 1] = 0;                 // �������� \n
+        path[strlen(path) - 1] = 0;                 // обрезаем \n
+        name[strlen(name) - 1] = 0;                 // обрезаем \n
 
-        Room *r = new Room(path);                   // ��������� �������
-        Rooms[name] = r;                            // � ����� � � ������ ������
+        Room *r = new Room(path);                   // загружаем комнату
+        Rooms[name] = r;                             // и кладём её в массив комнат
     }
 
     fclose(f);
@@ -230,33 +230,33 @@ void LoadRooms()                                    // ���������
 //---------------------------------------------------------------------------
 void ShuffleObjects()
 {
-    map<int, int> CObjects;                 // ���������� �������� ������ ����� <id, ����������> � ����
-    map<int, int> ObjectsOnFloor;           // ���������� �������� (�����) �� ����� (<����, ����������>)
-    map<int, list<AnsiString> > RoomNames;  // ������ �������� ������ ������� ����� (<����, ������ ���>)
-    int liftcards = 0;                      // ���������� ����-�������� � ����
+    map<int, int> CObjects;                 // количество объектов разных типов <id, количество> в игре
+    map<int, int> ObjectsOnFloor;           // количество объектов (любых) на этаже (<этаж, количество>)
+    map<int, list<AnsiString> > RoomNames;  // список названий комнат данного этажа (<этаж, список имён>)
+    int liftcards = 0;                      // количество лифт-карточек в игре
 
     Config::DynamitesTotal = 0;
-    for(map<AnsiString, Room *>::iterator room = Rooms.begin(); room != Rooms.end(); room++)     // ��������� �� ���� �������� ����
+    for(map<AnsiString, Room *>::iterator room = Rooms.begin(); room != Rooms.end(); room++)     // пробегаем по всем комнатам игры
     {
         AnsiString FloorNoStr = "";
         int idx = 1;
         while(room->first[idx] != '.')
             FloorNoStr += room->first[idx++];
 
-        int FloorNo = atoi(FloorNoStr.c_str());                     // ���������� ���� ������� �������
+        int FloorNo = atoi(FloorNoStr.c_str());                     // определяем этаж текущей комнаты
 
 //        char *s = room->first.c_str();
-        RoomNames[FloorNo].push_back(room->first);                  // � ������ ��� ������� � ������ ������ ������� �����
+        RoomNames[FloorNo].push_back(room->first);                  // и вносим имя комнаты в список комнат данного этажа
 
-        // ��������� �� ���� �������� �������
+        // пробегаем по всем объектам комнаты
         for(list<Triple>::iterator p = room->second->Data[Config::ObjectsLayer].begin(); p != room->second->Data[Config::ObjectsLayer].end(); p++)
         {
-            if(p->id == TTiles::LIFTCARD)                            // ���� ������ - ����-��������
-                liftcards++;                                         // ������ ���������� ���������� ��������� ����
+            if(p->id == TTiles::LIFTCARD)                            // если объект - лифт-карточка
+                liftcards++;                                         // просто запоминаем количество найденных карт
             else
-                CObjects[p->id]++;                                   // ����� ������ ��������� ������ � ������ ��������
+                CObjects[p->id]++;                                   // иначе вносим найденный объект в список объектов
 
-            ObjectsOnFloor[FloorNo]++;                               // ��������� �������� ���������� �������� ������� �����
+            ObjectsOnFloor[FloorNo]++;                               // обновляем значение количества объектов данного этажа
         }
     }
 
@@ -273,8 +273,8 @@ void ShuffleObjects()
     fclose(f);*/
 
     vector<int> ShuffledIDs;
-    for(map<int, int>::iterator p = CObjects.begin(); p != CObjects.end(); p++)   // ���������� ������ ��������������� ���� ��������� ��������
-        for(int i = 0; i < p->second; i++)                                        // (��������: 1, 2, 1, 1, 5, 12, 5, ...)
+    for(map<int, int>::iterator p = CObjects.begin(); p != CObjects.end(); p++)   // составляем список идентификаторов всех найденных объектов
+        for(int i = 0; i < p->second; i++)                                        // (например: 1, 2, 1, 1, 5, 12, 5, ...)
             ShuffledIDs.push_back(p->first);
 
 /*    FILE *f = fopen("sdump.txt", "wt");
@@ -283,59 +283,59 @@ void ShuffleObjects()
         fprintf(f, "%d ", ShuffledIDs[i]);
     fprintf(f, "\n");*/
 
-    random_shuffle(ShuffledIDs.begin(), ShuffledIDs.end());                       // � ������������ ��� � ��������� �������
+    random_shuffle(ShuffledIDs.begin(), ShuffledIDs.end());                       // и перемешиваем его в случайном порядке
 
 /*    for(unsigned i = 0; i < ShuffledIDs.size(); i++)
         fprintf(f, "%d ", ShuffledIDs[i]);
     fclose(f);*/
 
 
-    int index = 0;                                                     // ������ � ������� ������������ ���������������
-    int iteration = 0;                                                 // ������� �������� ����� ��������� ��������
-    vector<list<Triple>::iterator> reserved(liftcards);                // ������ liftcards ���������� �� ����������������� �����
+    int index = 0;                                                     // индекс в массиве перемешанных идентификаторов
+    int iteration = 0;                                                 // текущая итерация цикла установки объектов
+    vector<list<Triple>::iterator> reserved(liftcards);                // массив liftcards итераторов на зарезервированные места
 
-    // ���� �� ������ (�.�. map - ������������� ���������, ���� ��� �� ������ ������ � ������� - ��� �����)
+    // цикл по этажам (т.к. map - сортированная коллекция, цикл идёт от нижних этажей к верхним - это важно)
     for(map<int, list<AnsiString> >::iterator roomslist = RoomNames.begin(); roomslist != RoomNames.end(); roomslist++)
     {
-        // �������� � ������ roomslist->first
-        // ���� �� �������� �����
+        // работаем с этажом roomslist->first
+        // цикл по комнатам этажа
         for(list<AnsiString>::iterator roomname = roomslist->second.begin(); roomname != roomslist->second.end(); roomname++)
         {
-            Room *room = Rooms[*roomname];              // ������� �������
-            // ���� �� �������� �������
+            Room *room = Rooms[*roomname];              // текущая комната
+            // цикл по объектам комнаты
             for(list<Triple>::iterator p = room->Data[Config::ObjectsLayer].begin(); p != room->Data[Config::ObjectsLayer].end(); p++)
             {
-                if(iteration < liftcards)           // ������ liftcards ���� ����� �� �����������
-                    reserved[iteration] = p;        // ��� ���� �������� � ������ �����������������
+                if(iteration < liftcards)           // первые liftcards мест ничем не заполняются
+                    reserved[iteration] = p;        // они лишь вносятся в список зарезервированных
                 else
-                    p->id = ShuffledIDs[index++];   // � ��������� ������ ����� �� ��� ����� ������� ������ �� ������� ShuffledIDs
+                    p->id = ShuffledIDs[index++];   // в противном случае кладём на это место текущий объект из массива ShuffledIDs
                 iteration++;
             }
         }
     }
 
-    // ������ liftcards ���� �� ����� ������ ����� ������ ���������������.
-    // �������� ������� liftcards ��������� ������� �� ������ ������ � �������� ������� ��� ��������
-    // �� �������� ��������; �������� ��� ���� ����������� �� ������ ���� � ����������������� �����
+    // первые liftcards мест на самом нижнем этаже теперь зарезервированы.
+    // осталось выбрать liftcards случайных позиций на других этажах и обменять лежащие там предметы
+    // на лифтовые карточки; предметы при этом переносятся на нижний этаж в зарезервированные места
     for(int card = 0; card < liftcards; card++)
     {
-        // �������� ��������� ���� �� �������� ���������� �� ������ ������
+        // выбираем случайный этаж из заведомо достижимых на данный момент
         int floor = 1 + Config::LowerFloor + RandomRange(0, Config::LiftCardFloors[card] - Config::LowerFloor + 1);
-        int objNo = RandomRange(0, ObjectsOnFloor[floor]);           // �������� ��������� ���������� ����� ������� �� ������ �����
+        int objNo = RandomRange(0, ObjectsOnFloor[floor]);           // выбираем случайный порядковый номер объекта на данном этаже
         int curObjNo = 0;
-        // �������� �� ���� �������� ������� �����:
-        // ������� �� �������� �����
+        // проходим по всем объектам данного этажа:
+        // сначала по комнатам этажа
         for(list<AnsiString>::iterator roomname = RoomNames[floor].begin(); roomname != RoomNames[floor].end(); roomname++)
         {
             Room *room = Rooms[*roomname];
-            // � ������ - �� �������� �������
+            // а теперь - по объектам комнаты
             for(list<Triple>::iterator p = room->Data[Config::ObjectsLayer].begin(); p != room->Data[Config::ObjectsLayer].end(); p++)
             {
-                if(curObjNo == objNo)                 // ���� ����� �������� ������� ��������� � objNo
+                if(curObjNo == objNo)                 // если номер текущего объекта совпадает с objNo
                 {
-                    reserved[card]->id = p->id;       // ����� ������� ������ �� ����������������� �����
-                    p->id = TTiles::LIFTCARD;         // � �� ��� ������ ����� ����� ����-��������
-                    goto skip;                        // ��������� � ��������� ��������
+                    reserved[card]->id = p->id;       // кладём текущий объект на зарезервированное место
+                    p->id = TTiles::LIFTCARD;         // а на его старое место кладём лифт-карточку
+                    goto skip;                        // переходим к следующей карточке
                 }
                 curObjNo++;
             }
