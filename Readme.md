@@ -65,14 +65,13 @@ Play another track: Shift key.
 
 Joe Blade 3 Remake is created by two brothers &mdash; Maxim Mozgovoy and Anton Mozgovoy.
 
-Maxim (responsible for most project features) in 2004 was doing his computer science PhD studies in St.-Petersburg, Russia and Joensuu, Finland. As of 2019, he is an associate professor at the University of Aizu, Japan.
+Maxim (responsible for most project features) in 2004 was doing his PhD in St. Petersburg, Russia and Joensuu, Finland. As of 2019, he is an associate professor at the University of Aizu, Japan.
 
-Anton (who mostly worked on graphics) in 2004 was studying at Pyatigorsk State Linguistic University, Russia. As of 2019, he is as a freelance journalist and a PC power user, living in Vladikavkaz, Russia.
+Anton (who mostly worked on graphics) in 2004 was studying at Pyatigorsk State Linguistic University, Russia. As of 2019, he is a freelance journalist and a PC power user, living in Vladikavkaz, Russia.
 
 Feel free to contact us in any case.
 
-Maxim: mozgovoy@u-aizu.ac.jp
-Anton: mozgovoy_anton@rambler.ru
+Maxim: mozgovoy@u-aizu.ac.jp, Anton: mozgovoy_anton@rambler.ru
 
 -------------------------------------------------
 
