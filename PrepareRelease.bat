@@ -36,7 +36,9 @@ cd ..
 
 :: Copy libraries and executables
 copy Lib\Bass\bass.dll Release\
-copy Lib\SDL_bcb\SDL.dll Release\
+:: copy Lib\SDL_bcb\SDL.dll Release\
+copy Lib\SDL_Compat\*.dll Release\
+copy Lib\BcbRuntime\* Release\
 copy JoeBlade\Win32\Release\*.exe Release\
 
 :: Copy additional files

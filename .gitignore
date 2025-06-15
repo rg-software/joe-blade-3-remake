@@ -1,0 +1,9 @@
+**/__history/**
+**/*.local
+**/*.stat
+**/*.res
+**/Win32/**
+Resources/LevelEditor.exe
+Resources/MakeResFile.exe
+Resources/LevOpt.exe
+JoeBlade3_remake.zip

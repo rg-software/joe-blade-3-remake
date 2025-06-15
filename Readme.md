@@ -98,6 +98,8 @@ Project files are organized as follows.
     * `SDL_gfx-2.0.25.tar.gz`: complete [SDL_gfx](http://www.ferzkopp.net/wordpress/2016/01/02/sdl_gfx-sdl2_gfx/) distribution (the game uses its `SDL_rotozoom` module);
     * `SDL_image-1.2.12.zip`: complete SDL_Image distribution;  
     * `SDL-1.2.15.zip`: complete SDL distribution.
+    * `sdl12-compat-1.2.68-win32-x86.zip`: emulates SDL 1.2 using SDL 2 (necessary to run on Windows 10+).
+    * `c_builder_12_runtime.zip`: C++ Builder runtime libraries.
 - `Resources`. Multimedia assets used in the game.
 - `BuildAll.bat`. Main build script. Builds `JoeBlade3.groupproj`.
 - `PrepareTools.bat`. Copies compiled tools into `Resources` folder for subsequent use.
